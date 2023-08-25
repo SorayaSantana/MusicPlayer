@@ -22,12 +22,12 @@
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/headphones" />
 
     <LinearLayout
         android:id="@+id/text_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="61dp"
         android:orientation="vertical"
         android:paddingLeft="16dp">
 
@@ -43,5 +43,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="by Author" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/now_playing_container"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:paddingLeft="16dp">
+
+        <TextView
+            android:id="@+id/nowPlayingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="" />
+
+        <ImageView
+            android:id="@+id/nowPlayingImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </LinearLayout>
 </LinearLayout>

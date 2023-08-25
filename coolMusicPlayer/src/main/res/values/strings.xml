@@ -22,6 +22,8 @@
     <!-- Category name for music player [CHAR LIMIT=20] -->
     <string name="category_music_player">Player</string>
 
+    <string name="now_playing">Now Playing</string>
+
     <!-- Welcome texts when navigating and entering a view [CHAR LIMIT=??] -->
     <string name="welcome_my_music">Welcome to Your Music :)</string>
     <string name="welcome_music_player">Welcome to Music Player :)</string>

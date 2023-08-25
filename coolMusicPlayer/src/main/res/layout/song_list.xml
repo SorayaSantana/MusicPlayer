@@ -7,5 +7,8 @@
     android:orientation = "vertical"
     android:id = "@+id/list"
     android:choiceMode="singleChoice"
-    android:listSelector="@color/background_playing" />
+    android:listSelector="@color/background_playing">
 </ListView>
+
+    <!--android:listSelector="@android:color/transparent"-->
+    <!--android:listSelector="@drawable/song_list_selector"-->

@@ -13,9 +13,14 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class SongsAdapter extends ArrayAdapter<Song> {
+
+
+
+
     public SongsAdapter(@NonNull Context context, ArrayList<Song> songs) {
         super(context, 0, songs);
     }
+
 
     @NonNull
     @Override
@@ -32,6 +37,14 @@ public class SongsAdapter extends ArrayAdapter<Song> {
         TextView songAuthor = (TextView) listItemView.findViewById(R.id.author_text_view);
         songAuthor.setText(currentSong.getAuthor());
 
+       if(currentSong.isPlaying()) {
+            TextView nowPlayingText = listItemView.findViewById(R.id.nowPlayingText);
+            nowPlayingText.setText(R.string.now_playing);
+        }
+        else {
+            TextView nowPlayingText = listItemView.findViewById(R.id.nowPlayingText);
+            nowPlayingText.setText("");
+        }
         return listItemView;
     }
 }
