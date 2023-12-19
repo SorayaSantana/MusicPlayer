@@ -3,7 +3,6 @@ package com.example.android.coolMusicPlayer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -35,8 +34,6 @@ public class PlayerActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.list);
         listView.setAdapter(itemsAdapter);
-
-        //listView.setItemChecked(0, true); //first song checked by default.
 
         ImageButton button = findViewById(R.id.stop_button);
         button.setEnabled(false);
@@ -71,15 +68,10 @@ public class PlayerActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 listView.setItemChecked(position, true);
-                //listView.requestFocusFromTouch();
                 listView.setSelection(position);
-                Song song = (Song) listView.getAdapter().getItem(position);
-
-                Log.i("ItemOnClick", "current song="+ position);
 
                 ImageButton button = findViewById(R.id.play_button);
                 button.setEnabled(true);
-
             }
         });
 
@@ -92,13 +84,11 @@ public class PlayerActivity extends AppCompatActivity {
                 int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
                 if(songIndex < 0) return; //none playing
 
-                Log.i("stopButton", "current song="+ songIndex);
-
                 Song song = (Song) listView.getAdapter().getItem(songIndex);
                 song.setSongPlaying(false);
                 ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
-                stopSong(song);
+                stopSong();
             }
         });
 
@@ -110,15 +100,11 @@ public class PlayerActivity extends AppCompatActivity {
                 int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
                 if(songIndex < 0) return; //none playing
 
-                Log.i("nextButton", "current song="+ songIndex);
-
                 Song currentSong = (Song) listView.getAdapter().getItem(songIndex);
                 Song nextSong = (Song) listView.getAdapter().getItem(songIndex+1);
                 if(nextSong == null) {
                     return; // better safe than sorry
                 }
-
-                Log.i("nextButton", "current song="+ listView.getCheckedItemPosition());
 
                 currentSong.setSongPlaying(false);
                 nextSong.setSongPlaying(true);
@@ -136,15 +122,11 @@ public class PlayerActivity extends AppCompatActivity {
                 int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
                 if(songIndex < 0) return; //none playing
 
-                Log.i("PrevButton", "current song="+ songIndex);
-
                 Song currentSong = (Song) listView.getAdapter().getItem(songIndex);
                 Song prevSong = (Song) listView.getAdapter().getItem(songIndex-1);
                 if(prevSong == null) {
                     return; // better safe than sorry
                 }
-
-                Log.i("nextButton", "current song="+ listView.getCheckedItemPosition());
 
                 currentSong.setSongPlaying(false);
                 prevSong.setSongPlaying(true);
@@ -155,7 +137,7 @@ public class PlayerActivity extends AppCompatActivity {
         });
     }
 
-    protected void stopSong(Song song){
+    protected void stopSong(){
         TextView title = findViewById(R.id.current_song_text_view);
         title.setText("");
         TextView author = findViewById(R.id.current_author_text_view);

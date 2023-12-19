@@ -1,8 +1,8 @@
 package com.example.android.coolMusicPlayer;
 
 public class Song {
-    private String mSong;
-    private String mAuthor;
+    private final String mSong;
+    private final String mAuthor;
 
     private  boolean mCurrentPlaying = false;
 
