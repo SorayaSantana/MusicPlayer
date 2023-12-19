@@ -32,7 +32,5 @@
     <!-- Background color for the family members category -->
     <color name="category_my_music">#051C05</color>
 
-    <color name="songPlaying">#E91E63</color>
-
 
 </resources>

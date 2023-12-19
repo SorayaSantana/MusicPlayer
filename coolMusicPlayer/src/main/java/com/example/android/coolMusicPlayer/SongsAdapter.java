@@ -11,17 +11,33 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class SongsAdapter extends ArrayAdapter<Song> {
 
-
-
-
     public SongsAdapter(@NonNull Context context, ArrayList<Song> songs) {
         super(context, 0, songs);
+
     }
+    @Override
+    public int getViewTypeCount() {
 
+        return getCount();
+    }
+    @Override
+    public int getItemViewType(int position) {
 
+        return position;
+    }
+    public int getCurrentSongPlaying(){
+        for (int index=0; index < getCount(); index++){
+            if(getItem(index).isPlaying())
+                return index;
+        }
+
+        return -1; // none playing
+    }
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -45,6 +61,7 @@ public class SongsAdapter extends ArrayAdapter<Song> {
             TextView nowPlayingText = listItemView.findViewById(R.id.nowPlayingText);
             nowPlayingText.setText("");
         }
+
         return listItemView;
     }
 }

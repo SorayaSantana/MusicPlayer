@@ -25,7 +25,6 @@
         android:src="@drawable/headphones" />
 
     <LinearLayout
-        android:id="@+id/text_container"
         android:layout_width="wrap_content"
         android:layout_height="61dp"
         android:orientation="vertical"
@@ -46,7 +45,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/now_playing_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -60,7 +58,6 @@
             tools:text="" />
 
         <ImageView
-            android:id="@+id/nowPlayingImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

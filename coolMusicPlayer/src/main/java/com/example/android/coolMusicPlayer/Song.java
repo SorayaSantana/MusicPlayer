@@ -18,7 +18,6 @@ public class Song {
         mSong = song;
         mAuthor = author;
     }
-
     public String getSong(){
         return mSong;
     }

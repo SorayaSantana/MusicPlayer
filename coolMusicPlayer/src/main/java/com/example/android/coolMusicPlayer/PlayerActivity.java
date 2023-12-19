@@ -17,7 +17,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class PlayerActivity extends AppCompatActivity {
-
     ArrayList<Song> mSongs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,6 @@ public class PlayerActivity extends AppCompatActivity {
         mSongs.add(new Song("Come as you are", "Nirvana"));
         mSongs.add(new Song("Mirrors", "Justin Timberlake"));
         mSongs.add(new Song("Jailhouse rock", "Elvis Presley"));
-
 
         SongsAdapter itemsAdapter = new SongsAdapter(this, mSongs);
 
@@ -60,11 +58,13 @@ public class PlayerActivity extends AppCompatActivity {
                                           if(song == null)
                                               return; // better safe than sorry
 
+                                          ImageButton button = findViewById(R.id.stop_button);
+                                          button.performClick();
+
                                           song.setSongPlaying(true);
                                           ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
                                           playSong(song);
-
                                       }
                                   });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,6 +73,11 @@ public class PlayerActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 listView.setItemChecked(position, true);
+                //listView.requestFocusFromTouch();
+                listView.setSelection(position);
+                Song song = (Song) listView.getAdapter().getItem(position);
+
+                Log.i("ItemOnClick", "current song="+ position);
 
                 ImageButton button = findViewById(R.id.play_button);
                 button.setEnabled(true);
@@ -80,31 +85,22 @@ public class PlayerActivity extends AppCompatActivity {
             }
         });
 
-
         ImageButton stopButton = findViewById(R.id.stop_button);
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
 
-                TextView title = findViewById(R.id.current_song_text_view);
-                title.setText("");
-                TextView author = findViewById(R.id.current_author_text_view);
-                author.setText("");
-
                 ListView listView = findViewById(R.id.list);
-                int songIndex = listView.getCheckedItemPosition();
+                int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
+                if(songIndex < 0) return; //none playing
+
+                Log.i("stopButton", "current song="+ songIndex);
+
                 Song song = (Song) listView.getAdapter().getItem(songIndex);
                 song.setSongPlaying(false);
                 ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
-
-                stopButton.setEnabled(false);
-                ImageButton button = findViewById(R.id.play_button);
-                button.setEnabled(true);
-                button = findViewById(R.id.next_button);
-                button.setEnabled(false);
-                button = findViewById(R.id.prev_button);
-                button.setEnabled(false);
+                stopSong(song);
             }
         });
 
@@ -113,14 +109,19 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 ListView listView = findViewById(R.id.list);
-                int songIndex = listView.getCheckedItemPosition();
+                int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
+                if(songIndex < 0) return; //none playing
+
+                Log.i("nextButton", "current song="+ songIndex);
+
                 Song currentSong = (Song) listView.getAdapter().getItem(songIndex);
                 Song nextSong = (Song) listView.getAdapter().getItem(songIndex+1);
                 if(nextSong == null) {
                     return; // better safe than sorry
                 }
 
-                listView.setItemChecked(songIndex+1, true);
+                Log.i("nextButton", "current song="+ listView.getCheckedItemPosition());
+
                 currentSong.setSongPlaying(false);
                 nextSong.setSongPlaying(true);
                 ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
@@ -134,14 +135,18 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 ListView listView = findViewById(R.id.list);
-                int songIndex = listView.getCheckedItemPosition();
+                int songIndex = ((SongsAdapter)listView.getAdapter()).getCurrentSongPlaying();
+                if(songIndex < 0) return; //none playing
+
+                Log.i("PrevButton", "current song="+ songIndex);
+
                 Song currentSong = (Song) listView.getAdapter().getItem(songIndex);
                 Song prevSong = (Song) listView.getAdapter().getItem(songIndex-1);
                 if(prevSong == null) {
                     return; // better safe than sorry
                 }
 
-                listView.setItemChecked(songIndex-1, true);
+                Log.i("nextButton", "current song="+ listView.getCheckedItemPosition());
 
                 currentSong.setSongPlaying(false);
                 prevSong.setSongPlaying(true);
@@ -150,9 +155,22 @@ public class PlayerActivity extends AppCompatActivity {
                 playSong(prevSong);
             }
         });
+    }
 
+    protected void stopSong(Song song){
+        TextView title = findViewById(R.id.current_song_text_view);
+        title.setText("");
+        TextView author = findViewById(R.id.current_author_text_view);
+        author.setText("");
 
-
+        ImageButton button = findViewById(R.id.stop_button);
+        button.setEnabled(false);
+        button = findViewById(R.id.play_button);
+        button.setEnabled(true);
+        button = findViewById(R.id.next_button);
+        button.setEnabled(false);
+        button = findViewById(R.id.prev_button);
+        button.setEnabled(false);
     }
 
     protected void playSong(Song song) {
@@ -183,6 +201,5 @@ public class PlayerActivity extends AppCompatActivity {
         else {
             button.setEnabled(true);
         }
-
     }
 }
